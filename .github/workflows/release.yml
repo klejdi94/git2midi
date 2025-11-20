@@ -17,14 +17,17 @@ jobs:
             GOOS: linux
             GOARCH: amd64
             EXT: ""
+            BINARY_NAME: git2midi-linux-amd64
           - os: windows-latest
             GOOS: windows
             GOARCH: amd64
             EXT: ".exe"
+            BINARY_NAME: git2midi-windows-amd64.exe
           - os: macos-latest
             GOOS: darwin
             GOARCH: amd64
             EXT: ""
+            BINARY_NAME: git2midi-darwin-amd64
 
     steps:
       - name: Checkout code
@@ -40,13 +43,14 @@ jobs:
           GOOS: ${{ matrix.GOOS }}
           GOARCH: ${{ matrix.GOARCH }}
         run: |
-          go build -ldflags="-s -w" -o git2midi${{ matrix.EXT }} .
+          go build -ldflags="-s -w" -o ${{ matrix.BINARY_NAME }} .
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: git2midi-${{ matrix.GOOS }}-${{ matrix.GOARCH }}${{ matrix.EXT }}
-          path: git2midi${{ matrix.EXT }}
+          name: ${{ matrix.BINARY_NAME }}
+          path: ${{ matrix.BINARY_NAME }}
+          retention-days: 1
 
   release:
     name: Create Release
@@ -67,8 +71,7 @@ jobs:
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
-          files: artifacts/**
-          generate_notes: true
+          files: artifacts/*
+          generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
