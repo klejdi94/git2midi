@@ -67,11 +67,28 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           path: artifacts
+          pattern: git2midi-*
+
+      - name: List downloaded files
+        run: |
+          echo "Artifact structure:"
+          find artifacts -type f || true
+          ls -R artifacts/ || true
+
+      - name: Prepare release files
+        run: |
+          mkdir -p release
+          # Copy all files from artifact directories
+          find artifacts -type f -executable -exec cp {} release/ \; || true
+          find artifacts -type f -name "*.exe" -exec cp {} release/ \; || true
+          find artifacts -type f -name "git2midi-*" -exec cp {} release/ \; || true
+          # List what we have
+          ls -la release/
 
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
-          files: artifacts/*
+          files: release/*
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
