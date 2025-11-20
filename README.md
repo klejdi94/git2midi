@@ -58,6 +58,28 @@ Download the latest release for your platform:
 - [Linux](https://github.com/klejdi94/git2midi/releases/latest) - `git2midi-linux-amd64`
 - [macOS](https://github.com/klejdi94/git2midi/releases/latest) - `git2midi-darwin-amd64`
 
+**Windows Usage:**
+After downloading `git2midi-windows-amd64.exe`, you have two options:
+
+1. **Run from current directory:**
+   ```powershell
+   # Navigate to where you downloaded the file
+   cd C:\path\to\downloads
+   .\git2midi-windows-amd64.exe -repo . -out commits.mid
+   ```
+
+2. **Add to PATH (recommended):**
+   - Rename `git2midi-windows-amd64.exe` to `git2midi.exe`
+   - Move it to a folder in your PATH (e.g., `C:\Windows\System32` or create `C:\Tools` and add it to PATH)
+   - Or add the download folder to your PATH:
+     - Open System Properties → Environment Variables
+     - Edit "Path" under User variables
+     - Add the folder containing `git2midi.exe`
+   - Then you can run `git2midi` from anywhere:
+     ```powershell
+     git2midi -repo . -out commits.mid
+     ```
+
 **Option 2: Install via Go**
 
 ```bash
@@ -83,8 +105,16 @@ Install ffmpeg:
 
 ### Basic Usage
 
-Generate a MIDI file from the current directory's Git repository:
+**Windows:**
+```powershell
+# If git2midi.exe is in current directory
+.\git2midi.exe -repo . -out commits.mid
 
+# If added to PATH
+git2midi -repo . -out commits.mid
+```
+
+**Linux/macOS:**
 ```bash
 ./git2midi -repo . -out commits.mid
 ```
