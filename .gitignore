@@ -1,0 +1,35 @@
+# Binaries
+git2midi
+git2midi.exe
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Test binary
+*.test
+
+# Output files
+*.mid
+*.midi
+*.mp3
+*.wav
+*.ogg
+*.flac
+*.aac
+*.m4a
+commits.mid
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary git clones
+git2midi-*/
